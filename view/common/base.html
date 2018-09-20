@@ -1,0 +1,125 @@
+<!-- target: target_base -->
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=0,maximum-scale=1.0,minimum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="email=no" />
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
+  <meta name="full-screen" content="yes">
+  <meta name="x5-fullscreen" content="true">
+  <meta name="browsermode" content="application">
+  <meta name="x5-page-mode" content="app">
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- if: ${ua_data.os.name} !== 'ios' && ${ua_data.os.name} !== 'android' -->
+    <meta name="renderer" content="webkit|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!-- /if -->
+  <title>
+    <!-- block: title --><!-- /block -->
+  </title>
+  <link rel="stylesheet" href="${site_data.static_origin}/src/common/layout.styl">
+
+  <!-- if: ${ua_data.os.name} !== 'ios' && ${ua_data.os.name} !== 'android' -->
+  <script>
+    (function(win, lib) {
+
+      var doc = win.document;
+      var docElement = doc.documentElement;
+
+      var dpr = win.devicePixelRatio;
+      if (typeof dpr === 'number') {
+        dpr = Math.round(dpr);
+        if (dpr > 2) {
+          dpr = 2;
+        }
+      }
+      else {
+        dpr = 1;
+      }
+
+      var test = doc.createElement('div');
+      test.style.border = '0.5px solid transparent';
+      docElement.appendChild(test);
+      docElement.classList.add(
+        test.offsetHeight === 1 ? 'hairline' : 'no-hairline'
+      );
+      docElement.removeChild(test);
+
+      docElement.setAttribute('data-dpr', dpr);
+
+      function refresh(){
+        var rem = win.innerWidth / 10;
+        docElement.style.fontSize = rem + 'px';
+        lib.rem = rem;
+      }
+
+      var timer;
+      function refreshDelay() {
+        clearTimeout(timer);
+        timer = setTimeout(refresh, 300);
+      }
+
+      win.addEventListener(
+        'resize',
+        refreshDelay,
+        false
+      );
+      win.addEventListener(
+        'pageshow',
+        function (e) {
+          if (e.persisted) {
+            refreshDelay();
+          }
+        },
+        false
+      );
+
+      refresh();
+
+      lib.dpr = dpr;
+      lib.refresh = refresh;
+      lib.rem2px = function (rem) {
+        return rem * lib.rem;
+      };
+      lib.px2rem = function (px) {
+        return px / lib.rem;
+      };
+
+    })(window, window.lib || (window.lib = {}));
+  </script>
+  <!-- /if -->
+
+  <!-- block: style --><!-- /block -->
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- block: body --><!-- /block -->
+  </div>
+
+  <script src="${site_data.static_origin}/dep/base/0.0.1/src/base.js"></script>
+  <script src="${site_data.static_origin}/dep/yox/0.11.7/yox.js"></script>
+  <script src="${site_data.static_origin}/dep/yox-router/0.0.5/yox-router.js"></script>
+  <script src="${site_data.static_origin}/dep/bell/0.0.2/main.js"></script>
+
+  <script>
+    require.config({
+      baseUrl: '${site_data.static_origin}/src',
+      packages: []
+    });
+  </script>
+
+  <!-- block: script --><!-- /block -->
+
+</body>
+
+</html>

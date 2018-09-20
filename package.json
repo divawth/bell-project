@@ -1,0 +1,28 @@
+{
+  "name": "bell-project",
+  "version": "0.0.1",
+  "description": "edp project",
+  "main": "index.js",
+  "scripts": {
+    "init": "npm install edp -g",
+    "start": "edp ws start"
+  },
+  "edp": {
+    "wwwroot": "/",
+    "depDir": "dep",
+    "srcDir": "src",
+    "loaderAutoConfig": "js,htm,html,tpl,vm,phtml",
+    "loaderUrl": "http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js",
+    "dependencies": {}
+  },
+  "dependencies": {},
+  "author": "",
+  "repository": "empty",
+  "license": "BSD",
+  "readme": "README",
+  "devDependencies": {
+    "autoprefixer": "^9.1.5",
+    "autoresponse": "^0.2.2",
+    "ua-device": "^0.1.10"
+  }
+}
