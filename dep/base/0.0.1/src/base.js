@@ -1655,62 +1655,71 @@ var esl;
 //     }
 // });
 
-// (function () {
+(function () {  
 
-//     function createTextLoader(trimBlankline) {
+    function request(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.timeout = 3000;
+        xhr.responseType = "text";
+        xhr.open('GET', url, true);
+        xhr.onload = function(e) { 
+          if(this.status == 200||this.status == 304){
+            callback(this.responseText);
+          }
+        };
+        xhr.send();
+    }
 
-//         'use strict';
+    function createTextLoader(trimBlankline) {
 
-//         var cache = { };
+        'use strict';
 
-//         var onload = function (path, text, callback) {
-//             if (typeof cache[path] !== 'string') {
-//                 if (trimBlankline) {
-//                     text = text.replace(/\n\s*/g, '');
-//                 }
-//                 cache[path] = text;
-//             }
-//             callback(text);
-//         };
+        var cache = { };
 
-//         return {
-//             load: function (resourceId, req, load) {
+        var onload = function (path, text, callback) {
+            if (typeof cache[path] !== 'string') {
+                if (trimBlankline) {
+                    text = text.replace(/\n\s*/g, '');
+                }
+                cache[path] = text;
+            }
+            callback(text);
+        };
 
-//                 var path = req.toUrl(resourceId);
+        return {
+            load: function (resourceId, req, load) {
 
-//                 var text = cache[path];
-//                 if (text) {
-//                     if (text.done) {
-//                         text.done(function (text) {
-//                             onload(path, text, load);
-//                         });
-//                     }
-//                     else {
-//                         load(text);
-//                     }
-//                 }
-//                 else {
-//                     cache[path] =
-//                     $.ajax({
-//                         url: path,
-//                         dataType: 'text'
-//                     })
-//                     .done(function (text) {
-//                         onload(path, text, load);
-//                     });
-//                 }
+                var path = req.toUrl(resourceId);
 
-//             }
-//         };
+                var text = cache[path];
+                if (text) {
+                    if (text.done) {
+                        text.done(function (text) {
+                            onload(path, text, load);
+                        });
+                    }
+                    else {
+                        load(text);
+                    }
+                }
+                else {
+                    cache[path] = request(path, function (text) {
+                        console.log(text);
+                        onload(path, text, load);
+                    });
+                }
 
-//     }
+            }
+        };
 
-//     define('text', ['module'], function (module) {
-//         return createTextLoader();
-//     });
+    }
 
-//     define('tpl', ['module'], function (module) {
-//         return createTextLoader(true);
-//     });
+    define('text', ['module'], function (module) {
+        return createTextLoader();
+    });
 
-// })();
+    define('tpl', ['module'], function (module) {
+        return createTextLoader(true);
+    });
+
+})();

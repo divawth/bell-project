@@ -4,8 +4,13 @@
   demo
 <!-- /block -->
 
-<!-- block: body -->
-  <span>
-    demo
-  </span>
+<!-- block: script -->
+<script>
+  require(
+    ['main'],
+    function (main) {
+      main.init();
+    }
+  );
+</script>
 <!-- /block -->
