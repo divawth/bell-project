@@ -1,8 +1,30 @@
 import Yox from 'yox'
-import './style/base.styl'
-import template from './main.html'
-console.log('>>>>', template)
-new Yox({
+import * as YoxRouter from './yox-router'
+
+import fooComponent from './component/foo/index'
+import barComponent from './component/bar/index'
+
+console.log(YoxRouter)
+Yox.use(YoxRouter)
+
+var router = new YoxRouter.Router({
   el: '#app',
-  template: template
+  routes: [
+    {
+      path: '/foo',
+      component: fooComponent
+    },
+    {
+      path: '/bar',
+      component: barComponent
+    }
+  ],
+  route404: {
+    path: '/404',
+    component: {
+      template: '<div>not found</div>'
+    }
+  }
 })
+
+router.start()
