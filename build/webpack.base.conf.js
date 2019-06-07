@@ -51,8 +51,24 @@ const generateConfig = function (env) {
       loader: 'url-loader',
       options: {
         name: '[name]-[hash:5].min.[ext]',
-        outputPath: 'images/', //输出到 images 文件夹
-        limit: 20000 //把小于 20kb 的文件转成 Base64 的格式
+        limit: 1000, // size <= 1KB
+        outputPath: 'images/'
+      }
+    },
+    // img-loader for zip img
+    {
+      loader: 'image-webpack-loader',
+      options: {
+        // 压缩 jpg/jpeg 图片
+        mozjpeg: {
+          progressive: true,
+          quality: 65 // 压缩率
+        },
+        // 压缩 png 图片
+        pngquant: {
+          quality: '65-90',
+          speed: 4
+        }
       }
     }
   ]
@@ -88,6 +104,7 @@ const generateConfig = function (env) {
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(), // 默认情况下，此插件将删除 webpack output.path 目录中的所有文件，以及每次成功重建后所有未使用的 webpack 资产。
       new HtmlWebpackPlugin({
         // 打包输出HTML
         title: 'Yox 项目',
@@ -99,8 +116,7 @@ const generateConfig = function (env) {
         },
         filename: 'index.html', // 生成后的文件名
         template: 'view/index.html' // 根据此模版生成 HTML 文件
-      }),
-      new CleanWebpackPlugin(), // 默认情况下，此插件将删除 webpack output.path 目录中的所有文件，以及每次成功重建后所有未使用的 webpack 资产。
+      })
     ]
   }
 }
