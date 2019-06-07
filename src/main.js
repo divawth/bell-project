@@ -1,22 +1,24 @@
 import Yox from 'yox'
-import * as YoxRouter from './yox-router'
+import * as YoxRouter from 'yox-router'
+import * as bellUI from 'bell-ui'
 
-import fooComponent from './component/foo/index'
-import barComponent from './component/bar/index'
+import FooComponent from './component/foo/Foo'
+import BarComponent from './component/bar/Bar'
+import 'bell-ui/dist/bell-ui.css'
 
-console.log(YoxRouter)
 Yox.use(YoxRouter)
+Yox.use(bellUI)
 
 var router = new YoxRouter.Router({
   el: '#app',
   routes: [
     {
       path: '/foo',
-      component: fooComponent
+      component: FooComponent
     },
     {
       path: '/bar',
-      component: barComponent
+      component: BarComponent
     }
   ],
   route404: {

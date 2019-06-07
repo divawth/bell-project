@@ -99,6 +99,13 @@ const generateConfig = function (env) {
       rules: [
         { test: /\/src\/.*?\.html$/, use: htmlLoader },
         { test: /\.styl$/, use: styleLoader },
+        { 
+          test: /\.css$/, 
+          use: [
+            'style-loader',
+            'css-loader'
+          ] 
+        },
         { test: /\.(png|jpg|jpeg|gif)$/, use: imageLoader },
         { test: /\.(eot|woff2?|ttf|svg)$/, use: fontLoader }
       ]
