@@ -31,13 +31,13 @@
     "webpack": "^4.33.0",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.7.0",
-    "yox": "^1.0.0-alpha.35"
+    "yox": "^1.0.0-alpha.55"
   },
   "dependencies": {
-    "bell-ui": "^0.5.0",
+    "bell-ui": "^0.6.0",
     "lodash": "^4.17.11",
     "webpack-merge": "^4.2.1",
-    "yox-router": "^1.0.0-alpha11",
-    "yox-template-loader": "0.0.1"
+    "yox-router": "^1.0.0-alpha15",
+    "yox-template-loader": "0.0.6"
   }
 }
